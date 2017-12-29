@@ -1,0 +1,108 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<style type="text/css">
+  #id_transction_type {
+    display: inline-block;
+    max-width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: #fff url(data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' v…'0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E) no-repeat right .75rem center;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+</style>
+<div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          Dashboard
+        </li>
+        <li class="breadcrumb-item">
+          Detalhes {{account.nickname}}
+        </li>
+      </ol>
+      <div class="row">
+        <div class="container">
+          <div class="card mb-3">
+            <div class="card-header">
+            <i class="fa fa-table"></i> Histórico de Transações
+
+            <!-- Botão à Direita -->
+            <div class="pull-right">
+                <div class="btn-group">
+                  <a class="btn btn-info btn-xs" href="{% url 'presentation:snapshot' account.id %}" role="button">Snapshot</a>
+                </div>
+            </div>
+
+          </div>
+
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Valor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for item in transactions %}
+                  <tr>
+                    <td>{{ item.created_at }}</td>
+                    {% if item.event_type == 'deposit' %}
+                      <td>
+                        Deposito</td>
+                        <td>
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                          R$ {{ item.amount }}</td>
+                    {% elif item.event_type == 'withdraw'%}
+                      <td>
+                      Retirada</td>
+                       <td>
+                          <i class="fa fa-minus" aria-hidden="true"></i>
+                          R$ {{ item.amount }}</td>
+                    {% endif %}
+
+                  </tr>
+                {% endfor %}
+                <tr>
+                    <td>Hoje </td>
+                    <td>Saldo</td>
+                    <td>R$ {{ account.getBalance }}</td>
+                </tr>
+                <tr>
+                    <form method="post">
+                      {% csrf_token %}
+                      {{ form.non_field_errors }}
+                      {% for f in form %}
+                        <td>{{ f }}</td>
+                      {% endfor %}
+
+                      <td><button class="btn btn-primary btn-block" type="submit">Lançar</button></td>
+                    </form>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- /.container-fluid-->
+  <!-- /.content-wrapper-->
+{% endblock %}

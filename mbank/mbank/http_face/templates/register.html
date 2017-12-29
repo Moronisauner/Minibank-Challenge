@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.form-group input {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+</style>
+  <div class="container">
+    <div class="col-sm-6  mx-auto">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header">Login</div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+
+          {% for field in form %}
+          <div class="form-group">
+
+            <label>{{field.label}}</label>
+            {{field}}
+
+          </div>
+          {% endfor %}
+          <button class="btn btn-primary btn-block">Salvar</button>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="">Registre-se</a>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+
+{% endblock %}

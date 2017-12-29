@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sourcefiles %}
+  <!-- Page level plugin CSS-->
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+  <!-- Custom styles for dashboard template-->
+  <link href="{% static 'admin_template/css/sb-admin.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block sidebar %}
+  <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <!--
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Minha Conta">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">Minha Conta</span>
+          </a>
+        </li>
+        -->
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Contas Bancárias">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-bank"></i>
+            <span class="nav-link-text">Contas</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            {% for account in accounts %}
+            <li>
+              <a href="">
+              <i class="fa fa-fw fa-eye"></i>
+              {{ account.nickname }}</a>
+            </li>
+            {% endfor %}
+            <li>
+              <a href="">
+              <i class="fa fa-fw fa-plus"></i>
+              Criar Conta</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+  {% endblock %}
+
+{% block content %}
+
+
+{% endblock %}
+
+
+{% block sourcefiles_end %}
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'admin_template/js/sb-admin.min.js' %}"></script>
+    <!-- Custom scripts for this page-->
+    <script src="{% static 'admin_template/js/sb-admin-datatables.min.js' %}"></script>
+    <script src="{% static 'admin_template/js/sb-admin-charts.min.js' %}"></script>
+
+{% endblock %}
