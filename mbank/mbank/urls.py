@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from mbank.html_face.views import ClientCreateView
+from django.urls import path, include
+# from mbank import http_face
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('create-client/', ClientCreateView.as_view(), name='create_client')
+    # path('create-client/', ClientCreateView.as_view(), name='create_client')
+    path('', include('mbank.http_face.urls', namespace='http_face')),
 ]

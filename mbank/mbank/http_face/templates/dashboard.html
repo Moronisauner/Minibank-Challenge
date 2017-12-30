@@ -26,13 +26,13 @@
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             {% for account in accounts %}
             <li>
-              <a href="">
+              <a href="{% url 'http_face:account_details' account.get_uuid%}">
               <i class="fa fa-fw fa-eye"></i>
-              {{ account.nickname }}</a>
+              {{ account.get_account_number }}</a>
             </li>
             {% endfor %}
             <li>
-              <a href="">
+              <a href="{% url 'http_face:add_account' %}">
               <i class="fa fa-fw fa-plus"></i>
               Criar Conta</a>
             </li>

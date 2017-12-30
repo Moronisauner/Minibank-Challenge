@@ -42,4 +42,4 @@ class ClientRepo(AbstractRepository):
         client = self.__load_entity(client_model)
         return client
 ```
-
+ 

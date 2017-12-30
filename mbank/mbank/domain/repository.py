@@ -14,15 +14,18 @@ class DomainRepo(AbstractRepository):
         values = EventModel.objects.values('account_uuid')
         result = []
         for account_uuid in values:
-            result.append(self.find_by_id(account_uuid.get('account_uuid')))
+            result.append(self.find_by_account_uuid(account_uuid.get('account_uuid')))
         return result
 
-    def find_by_id(self, account_uuid):
+    def find_by_id(self):
+        pass
+
+    def find_by_account_uuid(self, account_uuid):
         """
         :param account_uuid:
         :return: Account
         """
-        events = EventModel.objects.filter(account_uuid=account_uuid) .order_by('version')
+        events = EventModel.objects.filter(account_uuid=account_uuid).order_by('version')
         acc = self.__load_entity(events)
         return acc
 
@@ -35,7 +38,7 @@ class DomainRepo(AbstractRepository):
         values = EventModel.objects.filter(event_type='CreateAccountEvent', client_uuid=client_uuid).values('account_uuid')
         result = []
         for account_uuid in values:
-            result.append(self.find_by_id(account_uuid.get('account_uuid')))
+            result.append(self.find_by_account_uuid(account_uuid.get('account_uuid')))
         return result
 
     def create(self, account):
@@ -84,7 +87,8 @@ class DomainRepo(AbstractRepository):
                     'amount': event.get_amount(),
                     'desc': event.get_desc(),
                 }),
-                version=event.get_version()
+                version=event.get_version(),
+                created_at = event.get_created_at(),
             )
         elif isinstance(event, DepositEvent):
             return EventModel(
@@ -95,7 +99,8 @@ class DomainRepo(AbstractRepository):
                     'amount': event.get_amount(),
                     'desc': event.get_desc(),
                 }),
-                version=event.get_version()
+                version=event.get_version(),
+                created_at = event.get_created_at(),
             )
         elif isinstance(event, CreateAccountEvent):
             return EventModel(
@@ -103,9 +108,10 @@ class DomainRepo(AbstractRepository):
                 account_uuid=event.get_account_uuid(),
                 client_uuid=event.get_client_uuid(),
                 body=json.dumps({
-                    'account_number': event.get_account_number()
+                    'account_number': event.get_account_number(),
                 }),
-                version=event.get_version()
+                version=event.get_version(),
+                created_at = event.get_created_at(),
             )
 
     def __load_entity(self, events_model):
@@ -148,6 +154,7 @@ class DomainRepo(AbstractRepository):
         event.set_account_uuid(account_uuid)
         event.set_client_uuid(event_model.client_uuid)
         event.set_version(event_model.version)
+        event.set_created_at(event_model.created_at)
         return event
 
     def _load_deposit_event(self, event_model):
@@ -163,6 +170,7 @@ class DomainRepo(AbstractRepository):
         event.set_version(event_model.version)
         event.set_amount(amount)
         event.set_desc(desc)
+        event.set_created_at(event_model.created_at)
         return event
 
     def _load_withdraw_event(self, event_model):
@@ -178,4 +186,5 @@ class DomainRepo(AbstractRepository):
         event.set_version(event_model.version)
         event.set_amount(amount)
         event.set_desc(desc)
+        event.set_created_at(event_model.created_at)
         return event

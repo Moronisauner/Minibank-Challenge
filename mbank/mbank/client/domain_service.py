@@ -39,7 +39,7 @@ class ClientCreateService(object):
                     is_company=is_company,
                     password=password1
                 )
-            client_use_case.create(new_client)
+                client_use_case.create(new_client)
         else:
             raise InvalidInputsException
 

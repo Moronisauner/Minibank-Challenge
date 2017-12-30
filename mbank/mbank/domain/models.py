@@ -9,3 +9,4 @@ class EventModel(models.Model):
     event_type = models.CharField(max_length=20)
     body = JSONField()
     version = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)

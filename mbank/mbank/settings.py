@@ -134,9 +134,9 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'client.ClientModel'
-LOGIN_URL = 'html_face:login'
-LOGIN_REDIRECT_URL = 'html_face:home'
-LOGOUT_URL = 'html_face:home'
+LOGIN_URL = 'http_face:login'
+LOGIN_REDIRECT_URL = 'http_face:home'
+LOGOUT_URL = 'http_face:home'
 
 # django.core.mail.backends.console.EmailBackend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

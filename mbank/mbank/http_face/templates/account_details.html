@@ -28,7 +28,7 @@
           Dashboard
         </li>
         <li class="breadcrumb-item">
-          Detalhes {{account.nickname}}
+          Detalhes {{account.get_account_number}}
         </li>
       </ol>
       <div class="row">
@@ -40,7 +40,7 @@
             <!-- Botão à Direita -->
             <div class="pull-right">
                 <div class="btn-group">
-                  <a class="btn btn-info btn-xs" href="{% url 'presentation:snapshot' account.id %}" role="button">Snapshot</a>
+                  <a class="btn btn-info btn-xs" href="" role="button">Snapshot</a>
                 </div>
             </div>
 
@@ -58,27 +58,19 @@
                 <tbody>
                 {% for item in transactions %}
                   <tr>
-                    <td>{{ item.created_at }}</td>
-                    {% if item.event_type == 'deposit' %}
+                    <td>{{ item.get_created_at }}</td>
                       <td>
-                        Deposito</td>
+                        {{item.get_desc}}</td>
                         <td>
                           <i class="fa fa-plus" aria-hidden="true"></i>
-                          R$ {{ item.amount }}</td>
-                    {% elif item.event_type == 'withdraw'%}
-                      <td>
-                      Retirada</td>
-                       <td>
-                          <i class="fa fa-minus" aria-hidden="true"></i>
-                          R$ {{ item.amount }}</td>
-                    {% endif %}
+                          R$ {{ item.get_amount }}</td>
 
                   </tr>
                 {% endfor %}
                 <tr>
                     <td>Hoje </td>
                     <td>Saldo</td>
-                    <td>R$ {{ account.getBalance }}</td>
+                    <td>R$ {{ account.get_balance }}</td>
                 </tr>
                 <tr>
                     <form method="post">

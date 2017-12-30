@@ -1,8 +1,7 @@
 from basehelp.exceptions import InvalidInputsException
-from .events import CreateAccountEvent, DepositEvent, WithdrawEvent
+from .events import CreateAccountEvent, DepositEvent, WithdrawEvent, TransactionEvent
 from .value_object import AccountNumber, InvalidAccountNumber
 import datetime, uuid
-
 
 
 class Account(object):
@@ -66,6 +65,13 @@ class Account(object):
     def get_events(self):
         return self.__events
 
+    def get_transactions_events(self):
+        result = []
+        for e in self.get_events():
+            if issubclass(e.__class__, TransactionEvent):
+                result.append(e)
+        return result
+
     def _add_event(self, event):
         if event.get_version() is None:
             event.set_version(self.next_event_version())
@@ -105,6 +111,7 @@ class Account(object):
         event = DepositEvent()
         event.set_version(self.next_event_version())
         event.set_amount(amount)
+        print('depositando >')
         self.apply(event)
 
     def withdraw(self, amount):

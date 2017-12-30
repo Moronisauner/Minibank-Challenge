@@ -8,19 +8,6 @@ class Event(object):
     __account_uuid = None
     __client_uuid = None
 
-    # def __init__(self, version=None, created_at=None,):
-    #     if self.__version is None and version:
-    #         self.set_version(version)
-    #     elif self.get_version() != version:
-    #         raise CannotChangeValueException
-    #
-    #     if self.get_created_at() is None:
-    #         self.set_created()
-    #     elif self.get_created_at() != created_at:
-    #         raise CannotChangeValueException
-    #     else:
-    #         self.set_created(created_at)
-
     def set_version(self, version):
         if self.__version is None:
             self.__version = version
@@ -30,14 +17,8 @@ class Event(object):
     def get_version(self):
         return self.__version
 
-    def set_created_at(self, created_at=None):
-        if self.__created_at is None and created_at is None:
-            self.__created_at = datetime.datetime.now()
-        elif self.get_created_at() is None and created_at:
-            assert isinstance(created_at, datetime.datetime)
-            self.__created_at = created_at
-        else:
-            raise CannotChangeValueException
+    def set_created_at(self, date):
+        self.__created_at = date
 
     def get_created_at(self):
         return self.__created_at
@@ -58,10 +39,6 @@ class TransactionEvent(Event):
     __amount = None
     __desc = ''
 
-    def __init__(self, desc=None):
-        if desc:
-            self.set_desc(desc)
-
     def set_amount(self,amount):
         self.__amount = amount
 
@@ -76,10 +53,20 @@ class TransactionEvent(Event):
 
 
 class DepositEvent(TransactionEvent):
-    pass
+
+    def __init__(self):
+        self.set_desc('Deposito')
+        self.set_created_at(datetime.datetime.now())
+
+
 
 class WithdrawEvent(TransactionEvent):
-    pass
+
+    def __init__(self):
+        self.set_desc('Retirada')
+        self.set_created_at(datetime.datetime.now())
+
+
 
 # class CreateClientEvent(Event):
 #     __username = None
@@ -134,7 +121,8 @@ class CreateAccountEvent(Event):
     #     self.set_account_number(account_number)
     #     if client_uuid:
     #         self.set_client_uuid(client_uuid)
-
+    def __init__(self):
+        self.set_created_at(datetime.datetime.now())
     def set_account_number(self, account_number):
         self.__account_number = account_number
 

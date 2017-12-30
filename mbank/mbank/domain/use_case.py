@@ -2,7 +2,8 @@ from .repository import DomainRepo
 from .entities import Account
 from django.core.mail import send_mail
 
-class ClientUseCase(object):
+
+class AccountUseCase(object):
     _repo = None
 
     def __init__(self, repo):
@@ -25,9 +26,13 @@ class ClientUseCase(object):
         self._repo.delete(account)
 
     def find_all_client_accounts(self, client):
-        return self._repo.find_by_client_uuid(client.get_uuid())
+        if isinstance(client, Account):
+            return self._repo.find_by_client_uuid(client.get_uuid())
+        else:
+            return self._repo.find_by_client_uuid(client.uuid)
 
-
+    def find_account_by_uuid(self, account_uuid):
+        return self._repo.find_by_account_uuid(account_uuid)
 
     # def find_by_email(self, email):
     #     return self._repo.find_by_email_address(email)

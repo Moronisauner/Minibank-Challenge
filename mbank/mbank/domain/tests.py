@@ -59,7 +59,7 @@ class DomainRepoTests(unittest.TestCase):
         repo = DomainRepo()
         repo.create(acc1)
 
-        acc2 = repo.find_by_id(acc1.get_uuid())
+        acc2 = repo.find_by_account_uuid(acc1.get_uuid())
         self.assertEqual(acc1.get_uuid(), acc2.get_uuid())
         self.assertEqual(acc1.get_client_uuid(), acc2.get_client_uuid())
         self.assertEqual(acc1.get_balance(), acc2.get_balance())
