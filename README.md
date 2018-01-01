@@ -157,3 +157,21 @@ mbank.domain.repository.py
         return acc
 ```
  
+ 
+Banco de Dados
+==========
+Configure o banco de dados postgres 
+
+mbank.settings.py
+```py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'minibank', # nome da base de dados
+        'HOST': 'localhost', # servidor
+        'PORT': '5432', # porta padrao postgres
+        'USER': 'postgres', # usuario com privilegios de super usuario
+        'PASSWORD': 'minhasenha' # senha do usuario
+    }
+}
+```
