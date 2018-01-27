@@ -1,5 +1,6 @@
 """
 eu estou testando algumas funcoes do git.... 
+imagina que eu fiz cagada aqui
 
 Django settings for mbank project.
 
